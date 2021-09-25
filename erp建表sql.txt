@@ -1,0 +1,105 @@
+
+create table erp_role_right
+(
+ roleid int not null,
+ rightid int not null,
+ constraint   PK_roleright  primary   key(roleid,rightid)   --复合主键  
+);
+
+execute sp_addextendedproperty 'MS_Description','角色编号','user','dbo','table','erp_role_right','column','roleid'; 
+execute sp_addextendedproperty 'MS_Description','权限权限编号','user','dbo','table','erp_role_right','column','rightid'; 
+
+
+create table erp_right
+(
+id int identity(1,1) primary key ,--主键
+pid int not null unique,--唯索引
+type int ,
+title nvarchar(100) not null,
+percode varchar(20),
+ico varchar(50),
+href varchar(50),
+"open" int default 0,
+ordernum int ,
+available int 
+);
+
+execute sp_addextendedproperty 'MS_Description','菜单权限编号','user','dbo','table','erp_right','column','id'; 
+execute sp_addextendedproperty 'MS_Description','所属菜单','user','dbo','table','erp_right','column','pid'; 
+execute sp_addextendedproperty 'MS_Description','权限类型[menu/permission]','user','dbo','table','erp_right','column','type'; 
+execute sp_addextendedproperty 'MS_Description','菜单权限名称','user','dbo','table','erp_right','column','title'; 
+execute sp_addextendedproperty 'MS_Description','权限编码[只有type=permission才有]','user','dbo','table','erp_right','column','percode'; 
+execute sp_addextendedproperty 'MS_Description','菜单图标','user','dbo','table','erp_right','column','ico'; 
+execute sp_addextendedproperty 'MS_Description','菜单调整请求路径','user','dbo','table','erp_right','column','href'; 
+execute sp_addextendedproperty 'MS_Description','菜单是否展开（0展开 1不展开）','user','dbo','table','erp_right','column','open'; 
+execute sp_addextendedproperty 'MS_Description','排序码','user','dbo','table','erp_right','column','ordernum'; 
+execute sp_addextendedproperty 'MS_Description','状态 0不可用 1可用','user','dbo','table','erp_right','column','available'; 
+
+create table erp_user_role
+(
+ userid int not null,
+ roleid int not null,
+ constraint   PK_userrole   primary   key(userid,roleid)   --复合主键  
+);
+
+execute sp_addextendedproperty 'MS_Description','用户编号','user','dbo','table','erp_user_role','column','userid'; 
+execute sp_addextendedproperty 'MS_Description','角色编号','user','dbo','table','erp_user_role','column','roleid'; 
+
+create table erp_role
+(
+id int identity(1,1) primary key ,
+rolecode varchar(20) not null,
+rolename nvarchar(100) not null,
+createtime datetime  not null,
+remark nvarchar(200)
+);
+
+execute sp_addextendedproperty 'MS_Description','角色编号','user','dbo','table','erp_role','column','id'; 
+execute sp_addextendedproperty 'MS_Description','角色编码','user','dbo','table','erp_role','column','rolecode'; 
+execute sp_addextendedproperty 'MS_Description','角色名称','user','dbo','table','erp_role','column','rolename'; 
+execute sp_addextendedproperty 'MS_Description','创建时间','user','dbo','table','erp_role','column','createtime'; 
+execute sp_addextendedproperty 'MS_Description','备注','user','dbo','table','erp_role','column','remark';  
+
+
+
+create table erp_user
+(
+id int identity(1,1) primary key,
+name nvarchar(50) not null,
+loginpwd varchar(20) not null,
+sex int ,
+deptid int,
+type int,
+imgpath varchar(50),
+available int ,
+remark nvarchar(200)
+);
+
+execute sp_addextendedproperty 'MS_Description','用户编号','user','dbo','table','erp_user','column','id'; 
+execute sp_addextendedproperty 'MS_Description','用户姓名','user','dbo','table','erp_user','column','name'; 
+execute sp_addextendedproperty 'MS_Description','登陆密码','user','dbo','table','erp_user','column','loginpwd'; 
+execute sp_addextendedproperty 'MS_Description','性别（0男1女）','user','dbo','table','erp_user','column','sex'; 
+execute sp_addextendedproperty 'MS_Description','实在部门编号','user','dbo','table','erp_user','column','deptid';
+execute sp_addextendedproperty 'MS_Description','用户类型（0超级用户，1普通用户）','user','dbo','table','erp_user','column','type'; 
+execute sp_addextendedproperty 'MS_Description','头像地址','user','dbo','table','erp_user','column','imgpath'; 
+execute sp_addextendedproperty 'MS_Description','是否可用','user','dbo','table','erp_user','column','available'; 
+execute sp_addextendedproperty 'MS_Description','备注','user','dbo','table','erp_user','column','remark';  
+
+
+create table erp_dept
+(
+id int identity(1,1) primary key,--主键
+pid int not null unique,--唯索引
+deptname nvarchar(100) not null,
+address varchar(50),
+createtime datetime not null,
+remark nvarchar(200)
+
+);
+execute sp_addextendedproperty 'MS_Description','部门编号','user','dbo','table','erp_dept','column','id'; 
+execute sp_addextendedproperty 'MS_Description','父级不门编号','user','dbo','table','erp_dept','column','pid';
+execute sp_addextendedproperty 'MS_Description','部门名称','user','dbo','table','erp_dept','column','deptname';
+execute sp_addextendedproperty 'MS_Description','是否展开','user','dbo','table','erp_dept','column','open'; 
+execute sp_addextendedproperty 'MS_Description','部门地址','user','dbo','table','erp_dept','column','address';
+execute sp_addextendedproperty 'MS_Description','创建时间','user','dbo','table','erp_dept','column','createtime';
+execute sp_addextendedproperty 'MS_Description','备注','user','dbo','table','erp_dept','column','remark';
